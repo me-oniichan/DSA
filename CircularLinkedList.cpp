@@ -52,7 +52,5 @@ int main(){
         cout<<ptr->val<<' ';
         ptr = ptr->next;
     } while (ptr != list);
-    
-
 return 0;
 }
