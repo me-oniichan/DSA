@@ -56,6 +56,10 @@ bool minHeap :: isempty(){
     return heap.empty();
 }
 
+int minHeap :: size(){
+    return heap.size();
+}
+
 int main(){
     minHeap pq;
     pq.push(5);
