@@ -26,13 +26,31 @@ class SegTree{
     int at(int i){
         return tree[i];
     }
+    int size(){
+        return tree.size();
+    }
+
+    int get(int, int, int);
+    int getUtil(int,int,int,int, int);
+    void update(int);
 };
+
+int SegTree :: get(int start, int end, int max_size){
+    if (start < 0 || end > tree.size()/2 || start > end) {cout<<"invalid input"; return -1;}
+    return getUtil(0, max_size-1, start, end, 0);
+}
+
+int SegTree :: getUtil(int start, int end, int qs, int qe, int i){
+    if (start >= qs && end <= qe) return tree[i];   
+    else if (qs > end || qe < start) return 0;
+
+    int m = mid(start, end);
+    return getUtil(start, m, qs, qe, i<<1|1) + getUtil(m+1, end, qs, qe, (i<<1)+2);
+}
 
 int main(){
     vector<int> arr{1,2,3,4,5,6, 7};
     SegTree tree(arr, 0, arr.size()-1, 0);
-    for(int i = 0; i < 2*arr.size()-1; i++){
-        cout<<tree.at(i)<<' ';
-    }
+    cout<<tree.get(0, 5, arr.size());
 return 0;
 }
