@@ -25,6 +25,16 @@ public:
         this->root = root;
     }
 
+    Node<T> *search(T val){
+        Node<T> * ptr = root;
+        while(ptr != nullptr){
+            if (ptr->val == val) return ptr;
+            else if (ptr->val < val) ptr = ptr->right;
+            else ptr = ptr->left;
+        }
+        return NULL;
+    }
+
     void insert(T value){
         Node<T> *node = new Node<T>(value);
         Node<T> *parent = NULL;
@@ -78,13 +88,12 @@ int main()
     bst.insert(74);
     bst.insert(5675);
     bst.insert(678);
+    cout<<(*bst.search(22)).val<<endl;
     bst.inOrder(bst.root);
     cout<<endl;
     bst.preOrder(bst.root);
     cout<<endl;
     bst.postOrder(bst.root);
-    cout<<endl;
-    cout<<bst.root->val;
     cout<<endl;
 
     BST<string> strBSt;
