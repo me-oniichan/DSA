@@ -75,7 +75,48 @@ public:
         postOrder(node->right);
         cout<<node->val<<' ';
     }
+
+    Node<T>* treemax(Node<T>* node = NULL){
+        if (node == NULL) node = root;
+
+        while(node != NULL and node->right != NULL) node = node->right;
+        return node;
+    }
+
+    Node<T>* treemin(Node<T>* node = NULL){
+        if (node == NULL) node = root;
+
+        while(node != NULL and node->right != NULL) node = node->left;
+        return node;
+    }
+
+    void transplant(Node<T>* parent, Node<T>* child){
+        if (parent->parent == nullptr) root = child;
+
+        else if (parent == child->parent->left) parent->parent->left =child;
+        else parent->parent->right = child;
+
+        if (child != nullptr) child->parent = parent->parent;
+    }
+
+    void deletion(Node<T> * node){
+        if (node->left == nullptr) transplant(node, node->right);
+        else if (node->right == nullptr) transplant(node, node->left);
+        else{
+            Node<T>* successor = treemin(node->right);
+            if (successor->parent != node){
+                transplant(successor, successor->right);
+                successor->right = node->right;
+                successor->right->parent = successor;
+            }
+            transplant(node, successor);
+            successor->left = node->left;
+            successor->left->parent = successor;
+        }
+
+    }
 };
+
 
 int main()
 {
@@ -88,20 +129,15 @@ int main()
     bst.insert(74);
     bst.insert(5675);
     bst.insert(678);
-    cout<<(*bst.search(22)).val<<endl;
+    bst.deletion(bst.search(22));
+    cout<<(bst.search(678))<<endl;
     bst.inOrder(bst.root);
     cout<<endl;
     bst.preOrder(bst.root);
     cout<<endl;
     bst.postOrder(bst.root);
     cout<<endl;
+    cout<<(bst.treemin())->val<<endl;
 
-    BST<string> strBSt;
-    strBSt.insert("one");
-    strBSt.insert("eight");
-    strBSt.insert("three");
-    strBSt.insert("nine");
-    strBSt.insert("two");
-    strBSt.inOrder(strBSt.root);
     return 0;
 }
