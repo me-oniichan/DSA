@@ -1,110 +1,166 @@
 #include <iostream>
 using namespace std;
 
-class LinkedList{
+class Node{
     public:
-        int val;
-        LinkedList *next = (LinkedList*)malloc(sizeof(LinkedList));
+    int data;
+    Node* next = NULL;
 
-        void append(int, LinkedList**);
-        void insert(int, int, LinkedList**);
-        void pop(LinkedList**, int index = -1);
-        int at(int index, LinkedList**);
+    Node(int val){
+        data = val;
+    }
 };
 
-void LinkedList :: append(int value, LinkedList **head){
-    LinkedList *newElem = new LinkedList;
-    newElem->val = value;
-    newElem->next = NULL;
-
-    LinkedList *ref = *head;
-    //if first elemnt is NULL
-    if (*head == NULL) 
-    {*head = newElem; return;}
-    
-    while (ref->next != NULL) 
-    {ref = ref->next;}
-    
-    ref->next = newElem;
-}
-
-void LinkedList :: insert(int value, int index, LinkedList** head){
-    LinkedList *newElem = new LinkedList;
-    newElem->val = value;
-
-    LinkedList *ref = *head;
-    
-    for (int i = 1; i < index; i++)
-    {
-        ref = ref->next;
+class LinkedList{
+    public:
+    Node *head = NULL;
+    int size = 0;
+    LinkedList(int val){
+        head = new Node(val);
+        size++;
     }
-    
-    if (index == 0){  //to insert at begining
-        newElem->next = *head;
-        *head = newElem;   //set head at new first value
-        return;
-        }
-    
-    newElem->next = ref->next;
-    ref->next = newElem;
 
-}
+    LinkedList(){};
 
-
-void LinkedList :: pop(LinkedList**head, int index){
-    //to delete first elemnt
-    if (index == 0){
-        LinkedList *temp = (*head)->next;
-        delete *head;
-        *head = temp;
-        return;
-    }
-    
-    int i = 1;
-    for(LinkedList *ptr = *head; ptr->next != NULL; ptr = ptr->next){
-        if (i == index)
-        {
-            LinkedList *temp = ptr->next->next;
-            delete ptr->next;
-            ptr->next = temp;
+    //Insert element in list
+    void push(int val){
+        size++;
+        if (head == nullptr) {
+            head = new Node(val);
             return;
         }
-        
-        i++;
-    }
-}
 
-int LinkedList :: at(int index, LinkedList**head){
-    int i = 0;
-    for (LinkedList*ptr = *head; ptr !=NULL; ptr = ptr->next)
-    {
-        if (i == index) return ptr->val;
-        i++;
+        Node* ptr = head;
+        while(ptr->next != NULL){
+            ptr = ptr->next;
+
+        }
+        ptr->next = new Node(val);
     }
-    return -1;
-}
+
+    //Insert Node at given index
+    void insert(int index, int val){
+        Node * node = new Node(val);
+        if (head == nullptr  && index == 0){
+            head = node;
+            size++;
+            return;
+        }
+        else if (index == 0)
+        {
+            node->next = head;
+            head = node;
+            size++;
+            return;
+        }
+        int i = 1;
+        Node * ptr = head;
+        for(; i < index; i++) ptr = ptr->next;
+        node->next = ptr->next;
+        ptr->next = node;
+        size++; 
+    }
+
+    // Insert element after given value
+    void insert_after(int refernce, int val){
+        if (head == nullptr) return;
+        Node *ptr = head;
+        while(ptr!=nullptr){
+            if (ptr->data == refernce){
+                Node *temp = new Node(val);
+                temp->next = ptr->next;
+                ptr->next = temp;
+                size++;
+                if ( refernce == val) ptr = ptr->next;
+            }
+            ptr=ptr->next;
+        }
+    }
+
+    //Removes head of list
+    void pop_front(){
+        if(head == nullptr) return;
+        head = head->next;
+        size--;
+    }
+
+    //Deletes given value from list
+    void pop(int val){
+        if (head == nullptr) return;
+        else if(head->data == val){
+            head = head->next;
+            size--;
+        }
+        Node *ptr = head;
+
+        while(ptr->next != NULL && ptr->next->data != val) ptr = ptr->next;
+        if (ptr->next != nullptr){
+            ptr->next = ptr->next->next;
+            size--;
+        }
+    }
+    //Deletes all occurences 
+    void pop_all(int val){
+        if (head == nullptr) return;
+        while(head->data == val) {
+            head = head->next;
+            size--;
+        }
+        Node * ptr = head;
+        Node *prev = head;
+        while (ptr != NULL)
+        {
+            if ( ptr ->data == val) {
+                prev->next = ptr->next;
+                size--;
+            }
+            else prev = ptr;
+
+            ptr = ptr->next;
+        }
+        
+    }
+
+    //deletes given index from list
+    void erase(int index){
+        if (head == nullptr) return;
+        else if (index == 0) {
+            head = head->next;
+            size--;
+            return;
+        }
+
+        Node *ptr = head;
+        int i = 1;
+        for(; ptr->next != nullptr && i < index; i++) ptr = ptr->next;
+        if (i == index){
+            ptr->next = ptr->next->next;
+            size--;
+        }
+    };
+};
 
 int main(){
-    LinkedList *list = NULL;
+    LinkedList list;
+    list.push(5);
+    list.push(6);
+    list.push(7);
+    list.push(8);
+    list.push(8);
+    list.push(9);
+    list.push(10);
+    // list.pop(5);
+    // list.pop(7);
 
-    list->append(5, &list);
-    list->append(6, &list);
-    list->append(7, &list);
-    list->append(8, &list);
-    list->append(9, &list);
-    // list->insert(0, 0, &list);
-    // list->insert(2, 3, &list);
-    // list->insert(6, 4, &list);
-    list->pop(&list, 10);
+    // list.erase(2);
 
-    cout<<"Linked List is as follows:"<<endl;
-    for (LinkedList *i = list; i != NULL; i = i->next)
-    {
-        cout<<i->val<<" ";
-    }
-    cout<<endl;
-    cout<<"Value at 3 is : "<< list->at(3, &list)<<endl;
+    // list.pop_all(8);
+
+    list.insert(4, 11);
+    list.insert_after(8, 8);
     
-return 0;
-
+    cout<<list.size<<endl;
+    for(auto ptr = list.head; ptr!=NULL; ptr =ptr->next) cout<<ptr->data<<' ';
+ 
+    return 0;
 }
