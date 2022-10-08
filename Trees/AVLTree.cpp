@@ -64,17 +64,21 @@ void AVL:: right_rotate(Node * node){
     Node *left = node->left;
     
     node->left = left->right;
+    left->right = node;
     if(node->left != nullptr) node->left->parent = node;
     
-    left->right = node;
     left->parent = node->parent;
     node->parent = left;
-    if(left->parent != nullptr) left->parent->left = left;
-    else {
-        root = left;
-    }
     node->height = 1+max(height(node->left), height(node->right));
     left->height = 1+max(height(left->left), height(left->right));
+    
+    if(left->parent == nullptr) root = left;
+    else {
+        Node* parent = left->parent;
+        if(parent->left == node) parent->left = left;
+        else parent->right = left;
+        parent->height = 1 + max(height(parent->left), height(parent->right));
+    }
 }
 
 void AVL:: left_rotate(Node* node){
@@ -82,16 +86,22 @@ void AVL:: left_rotate(Node* node){
     
     node->right = right->left;
     right->left = node;
+    if(node->right != nullptr) node->right->parent = node;
     right->parent = node->parent;
     node->parent = right;
-    if(right->parent == nullptr) root = right;
-    else {
-         right->parent->right = right;
-    }
 
     node->height = 1+max(height(node->left), height(node->right));
     right->height = 1+max(height(right->left), height(right->right));
+    
+    if(right->parent == nullptr) root = right;
+    else {
+        Node* parent = right->parent;
+        if(parent->left == node) parent->left = right;
+        else parent->right = right;
+        parent->height = 1 + max(height(parent->left), height(parent->right));
+    }
 }
+
 
 void AVL:: insert(int data, Node* node, Node *parent = NULL){
     if (root == nullptr){
@@ -113,7 +123,7 @@ void AVL:: insert(int data, Node* node, Node *parent = NULL){
 
     if (balance > 1 && data < node->left->data) right_rotate(node);
     else if (balance < -1 && data > node->right->data) left_rotate(node);
-    if (balance > 1 && data > node->left->data){
+    else if (balance > 1 && data > node->left->data){
         left_rotate(node->left);
         right_rotate(node);
     }
@@ -130,6 +140,7 @@ int main(){
     tree.insert(7, tree.root);
     tree.insert(4, tree.root);
     tree.insert(2, tree.root);
+
     tree.level_order();                                
 
 return 0;
