@@ -31,14 +31,12 @@ void merge(int arr[], int left, int mid, int right){
         mergeIndex++;
     }
 
-    while (arr1_index < size1)
-    {
+    while (arr1_index < size1){
         arr[mergeIndex] = arr1[arr1_index];
         arr1_index++; mergeIndex++;
     }
 
-    while (arr2_index < size2)
-    {
+    while (arr2_index < size2){
         arr[mergeIndex] = arr2[arr2_index];
         arr2_index++; mergeIndex++;
     }
