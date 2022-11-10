@@ -1,5 +1,5 @@
 //Insertion in BST using iteration
-//probelem statement: https://www.hackerrank.com/challenges/binary-search-tree-insertion/problem
+//Problem statement: https://www.hackerrank.com/challenges/binary-search-tree-insertion/problem
 
 
 #include <bits/stdc++.h>
