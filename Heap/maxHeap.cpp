@@ -10,7 +10,7 @@ class minHeap{
     int top();
     bool isempty();
     int size();
-    int at(int);
+    static int at(int);
 };
 
 void minHeap :: push(int val){
@@ -58,6 +58,10 @@ bool minHeap :: isempty(){
 
 int minHeap :: size(){
     return heap.size();
+}
+
+int minHeap::at(int) {
+    return 0;
 }
 
 int main(){
