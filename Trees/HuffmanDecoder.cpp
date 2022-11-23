@@ -1,11 +1,6 @@
-//Decoding Hiffman code
+//Decoding Huffman code
 //Problem Statement: https://www.hackerrank.com/challenges/tree-huffman-decoding/problem
 
-//
-//  main.cpp
-//  Huffman
-//
-//  Created by Vatsal Chanana
 
 #include<bits/stdc++.h>
 using namespace std;
