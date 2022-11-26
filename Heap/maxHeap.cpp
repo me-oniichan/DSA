@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <vector>
 using namespace std;
 
@@ -74,7 +74,7 @@ int main(){
     pq.push(0);
     pq.push(2);
 
-    while (!pq.isempty())
+    while (!pq.isempty())ś
     {
         cout<<pq.top()<<' ';
         pq.pop();
