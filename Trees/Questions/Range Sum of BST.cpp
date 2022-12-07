@@ -17,9 +17,10 @@ public:
     int sum = 0, low, high;
     void inOrder(TreeNode* node){    
         if (node == NULL) return;
-        inOrder(node->left);
+
+        if(node->val > low) inOrder(node->left);
         if (node->val >= low && node->val <= high) sum+=node->val;
-        inOrder(node->right);
+        if(node->val < high) inOrder(node->right);
     }
     int rangeSumBST(TreeNode* root, int low, int high) {
         this->low = low;
