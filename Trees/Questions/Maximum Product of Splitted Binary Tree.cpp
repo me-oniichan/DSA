@@ -14,18 +14,22 @@ struct TreeNode {
 
 class Solution {
 public:
-    int dfs(TreeNode* node, unordered_map<TreeNode*,int> &m){
+    long total = 0, maxp = 0;
+    long sum(TreeNode* node){
         if (node == NULL) return 0;
-        return m[node] = dfs(node->left,m)  + dfs(node->right,m)+ node->val;
+        return (node->val + sum(node->left) + sum(node->right));
     }
+
+    int dfs(TreeNode* node){
+        if (node == NULL) return 0;
+        int s = dfs(node->left) + dfs(node->right) + node->val;
+        maxp = max(maxp, (total - s)*s);
+        return s;
+    }
+
     int maxProduct(TreeNode* root) {
-        unordered_map<TreeNode*, int> m;
-        long total = dfs(root, m);
-        long maxp = 0;
-        for(auto i : m){
-            long prod = (total - i.second)*i.second;
-            if(prod>maxp) maxp = prod;
-        }
+        total = sum(root);
+        dfs(root);
         return maxp%1000000007;
     }
 }; 
