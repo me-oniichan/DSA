@@ -8,20 +8,13 @@ using namespace std;
 class Solution {
 public:
     int rob(vector<int>& nums) {
-        int sum = 0, sum2=0, i = 0;
-        while(i < nums.size()-1){
-            if (nums[i] > nums[i+1]){
-                sum+=nums[i];
-                sum2+=nums[i];
-                i+=2;
-            }
-            else{
-                sum+=nums[i+1];
-                sum2+=nums[i+1];
-                i+=3;
-            }
+        int dp[3] = {0};
+        for(int i: nums){
+            dp[0] = max(i+dp[2], dp[1]);
+            dp[2] = dp[1];
+            dp[1] = dp[0];
         }
-        return sum;
+        return dp[0];
     }
 };
 
