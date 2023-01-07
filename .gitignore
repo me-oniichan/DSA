@@ -3,6 +3,7 @@
 !*.c
 !*.py
 !*.cpp
+!*.java
 .vscode/
 *exp*
 .cph
