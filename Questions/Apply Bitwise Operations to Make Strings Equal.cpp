@@ -5,30 +5,6 @@ using namespace std;
 
 class Solution {
 public:
-    // bool makeStringsEqual(string s, string target) {
-    //     queue<int> set, reset;
-    //     int ones=0;
-    //     for(int i = 0; i < s.length(); i++){
-    //         if(s[i] != target[i]){
-    //             if(s[i] == '0') reset.push(i);
-    //             else set.push(i);
-    //         };
-    //         if(s[i] == '1') ones++;
-    //     }
-    //     while(!reset.empty()){
-    //         int i = reset.front();
-    //         reset.pop();
-    //         if(ones<1) return false;
-    //         ones++;
-    //     }
-    //     while(!set.empty()){
-    //         int i = set.front();
-    //         set.pop();
-    //         if(ones<2) return false;
-    //         ones--;
-    //     }
-    //     return true;
-    // }
     bool makeStringsEqual(string s, string target) {
         int ones = 0, set=0, reset=0;
         for(int i = 0; i < s.length(); i++){
