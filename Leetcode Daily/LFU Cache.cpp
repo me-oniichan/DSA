@@ -4,10 +4,8 @@ using namespace std;
 #define fii for(int i = 0; i < n; i++)
 
 class LFUCache {
-    // key: frequency, value: list of original key-value pairs that have the same frequency.
     unordered_map<int, list<pair<int, int>>> frequencies;
-    // key: original key, value: pair of frequency and the iterator corresponding key int the
-    // frequencies map's list.
+
     unordered_map<int, pair<int, list<pair<int, int>>::iterator>> cache;
     int capacity;
     int minf;
