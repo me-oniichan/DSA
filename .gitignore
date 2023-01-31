@@ -5,6 +5,8 @@
 !*.cpp
 !*.java
 .vscode/
+.idea/
+.vs/
 *exp*
 .cph
 Notes
