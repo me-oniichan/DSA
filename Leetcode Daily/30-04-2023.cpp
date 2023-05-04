@@ -64,14 +64,12 @@ public:
 
         for(auto&v : edges){
             if(v[0]==1){
-                if(uf1.areConnected(v[1], v[2])) ans++;
+                if(uf1.areConnected(v[1],v[2])) ans++;
                 else uf1.join(v[1], v[2]);
-            }
-            else if(v[0]==2){
-                if(uf2.areConnected(v[1], v[2])) ans++;
+            }else if(v[0]==2){
+                if(uf2.areConnected(v[1],v[2])) ans++;
                 else uf2.join(v[1], v[2]);
-            }
-            else{
+            }else{
                 if(uf1.areConnected(v[2], v[1]) && uf2.areConnected(v[2], v[1])) ans++;
                 else{
                     uf2.join(v[2], v[1]);
