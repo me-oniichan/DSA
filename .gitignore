@@ -4,6 +4,7 @@
 !*.py
 !*.cpp
 !*.java
+!*.rs
 .vscode/
 .idea/
 .vs/
