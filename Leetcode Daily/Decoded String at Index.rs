@@ -1,8 +1,8 @@
 impl Solution {
     pub fn decode_at_index(s: String, k: i32) -> String {
-        let mut idx=0 as usize;
+        let mut idx=1 as usize;
         let mut k = k as usize;
-        let mut len= 0 as usize;
+        let mut len= 1 as usize;
         let s: Vec<char> = s.chars().collect();
 
         while len<k {
@@ -18,7 +18,7 @@ impl Solution {
                 if new_len > k{
                     k = new_len - k;
                     len = 1;
-                    idx = 0;
+                    idx = 1;
                     break;
                 }
                 
