@@ -1,33 +1,37 @@
-//pending
 impl Solution {
     pub fn regex(s: &Vec<char>, p: &Vec<char>, i: usize, j: usize)-> bool{
-        if j == p.len() && i==s.len(){
+        if s.len() == i && p.len() == j{
             return true;
         }
-        else if j==p.len(){
+        else if p.len() == j{
             return false;
         }
-        else if i==s.len() {
-            return '*' == p.last().unwrap();
+        else if s.len() == i{
+            return j+2 == p.len() && p[j+1] == '*';
         }
-
-        if p[j] == "."{
-            return Solution::regex(s, p, i+1, j+1);
-        }
-        else if p[j] == "*"{
-            for c in i..s.len(){
-                if (Solution::regex(s,p,i+1, j+1)){
+        
+        if j+1 < p.len() && p[j+1] == '*'{
+            if (s[i] == p[j] || p[j] == '.'){
+                if Solution::regex(s,p, i+1, j) {
                     return true;
                 }
+                else if Solution::regex(s,p,i, j+2){
+                    return true;
+                }
+
             }
-            return false;
+            else if Solution::regex(s,p, i, j+2) {
+                return true;
+            }
+        }
+        else if p[j] == '.' && Solution::regex(s,p,i+1,j+1) {
+            return true;
+        }
+        else if p[j] == s[i] && Solution::regex(s,p,i+1,j+1){
+            return true;
         }
 
-        else if p[j] != s[i] {
-            return false;
-        }
-
-        return Solution::regex (s, p, i+1, j+1);
+        return false;
     }
     pub fn is_match(s: String, p: String) -> bool {
         let (size1, size2) = (s.len(), p.len());
@@ -39,3 +43,5 @@ impl Solution {
         return Solution::regex(&s, &p, 0, 0);
     }
 }
+
+
