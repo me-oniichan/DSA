@@ -4,21 +4,23 @@ impl Solution {
             return true;
         }
         else if p.len() == j{
+            if j==16{
+                println!("{j}");
+            }
             return false;
         }
         else if s.len() == i{
-            return j+2 == p.len() && p[j+1] == '*';
+            return j+1<p.len() && p[j+1]=='*' && Solution::regex(s,p,i,j+2);
         }
         
         if j+1 < p.len() && p[j+1] == '*'{
             if (s[i] == p[j] || p[j] == '.'){
-                if Solution::regex(s,p, i+1, j) {
+                if Solution::regex(s,p, i, j+2) {
                     return true;
                 }
-                else if Solution::regex(s,p,i, j+2){
+                else if Solution::regex(s,p,i+1, j){
                     return true;
                 }
-
             }
             else if Solution::regex(s,p, i, j+2) {
                 return true;
@@ -43,5 +45,8 @@ impl Solution {
         return Solution::regex(&s, &p, 0, 0);
     }
 }
+
+
+
 
 
