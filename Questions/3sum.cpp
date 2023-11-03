@@ -27,6 +27,7 @@ public:
             }
             i = hmap[nums[i]];
         }
+	   
         return result;
     }
 };
