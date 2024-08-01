@@ -5,6 +5,7 @@
 !*.cpp
 !*.java
 !*.rs
+!*.go
 .vscode/
 .idea/
 .vs/
