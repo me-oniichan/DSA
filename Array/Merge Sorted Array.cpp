@@ -21,10 +21,4 @@ public:
             for(int i = 0; i<=n2;i++) nums1[i] = nums2[i];
         }
     }
-}; 
- 
-int main(){
-    
- 
-return 0;
-}
+};
